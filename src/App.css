@@ -47,4 +47,34 @@
   color: white;
   border-radius: 30px;
   border: unset;
+  padding: 7px 20px;
+}
+
+.toastr_container {
+  position: fixed;
+  top: 3%;
+  right: 1%;
+  z-index: 10000;
+  background: green;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #757474;
+}
+
+.loading_section {
+  background: #9a9a9a;
+  padding: 40px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #b8b8b8;
+  background-image: linear-gradient(
+    to right top,
+    #d6eec4,
+    #ebdcb0,
+    #f8c9af,
+    #f6babb,
+    #e2b1cd
+  );
 }

@@ -7,12 +7,31 @@ import {
   BiShoppingBag,
   BiShow,
   BiTrash,
+  BiWindowClose,
 } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/cartContext";
+import { ToastrContext } from "../context/toastrContext";
 
 function Cart() {
   const cartContext = useContext(CartContext);
+  const toastrContext = useContext(ToastrContext);
+
+  const handleRemoveCartProduct = (product) => {
+    cartContext.removeCartProduct(product);
+    toastrContext.dispatch({
+      type: "SHOW_TOASTR",
+      payload: { message: "Product removed from cart" },
+    });
+  };
+
+  const handleEmptyCart = () => {
+    cartContext.handleEmptyCart();
+    toastrContext.dispatch({
+      type: "SHOW_TOASTR",
+      payload: { message: "Cart cleared" },
+    });
+  };
   return (
     <div className="py-4">
       <div className="container">
@@ -34,6 +53,7 @@ function Cart() {
                   <thead className="bg-light">
                     <tr>
                       <th>S. No.</th>
+                      <th>Image</th>
                       <th>Product Name</th>
                       <th>Price</th>
                       <th>Quantity</th>
@@ -45,13 +65,23 @@ function Cart() {
                     {cartContext.cartProducts.map((product, index) => {
                       return (
                         <tr key={index + 1}>
-                          <td>{index + 1}</td>
+                          <td width="5%">{index + 1}</td>
+                          <td width="100">
+                            <img
+                              src={product.image}
+                              alt=""
+                              className="w-100 img-thumbnail"
+                            />
+                          </td>
                           <td>{product.name}</td>
                           <td>{product.price}</td>
                           <td>{product.qty}</td>
                           <td>{product.price * product.qty}</td>
                           <td>
-                            <button className="btn btn-danger btn-sm">
+                            <button
+                              className="btn btn-danger btn-sm"
+                              onClick={() => handleRemoveCartProduct(product)}
+                            >
                               <BiTrash /> Remove
                             </button>
                           </td>
@@ -60,13 +90,27 @@ function Cart() {
                     })}
                   </tbody>
                 </table>
-                <div className="mt-4 d-flex justify-content-end">
+                <div className="mt-4 d-flex justify-content-between">
+                  <div className="">
+                    <button
+                      className="btn btn-dark rounded-pill"
+                      onClick={handleEmptyCart}
+                    >
+                      <BiWindowClose /> Empty Cart
+                    </button>
+                  </div>
                   <div className="">
                     <h5>
                       Total Price: <BiRupee />
                       {cartContext.fetchTotalCartPrice()}
                     </h5>
-                    <button className="btn btn-custom d-flex align-items-center">
+                    <button
+                      className="btn btn-custom d-flex align-items-center"
+                      type="button"
+                      onClick={() =>
+                        alert("Payment is not included in this project.")
+                      }
+                    >
                       Proceed to payment <BiRightArrowAlt />
                     </button>
                   </div>

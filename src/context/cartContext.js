@@ -28,10 +28,15 @@ const CartContextProvider = ({ children }) => {
           id: product.id,
           name: product.title,
           price: product.price,
+          image: product.image,
           qty: 1,
         },
       ]);
     }
+  };
+
+  const handleEmptyCart = () => {
+    setCartProducts([]);
   };
 
   const fetchTotalCartPrice = () => {
@@ -42,12 +47,21 @@ const CartContextProvider = ({ children }) => {
     return totalPrice.toFixed(2);
   };
 
+  const removeCartProduct = (product) => {
+    let newCartProducts = cartProducts.filter((pro) => {
+      return pro.id !== product.id;
+    });
+    setCartProducts(newCartProducts);
+  };
+
   return (
     <CartContext.Provider
       value={{
         cartProducts,
         addToCart,
         fetchTotalCartPrice,
+        removeCartProduct,
+        handleEmptyCart,
       }}
     >
       {children}

@@ -15,7 +15,7 @@ function Header() {
   };
 
   return (
-    <header className="header">
+    <header className="header sticky-top">
       <div className="container d-flex flex-wrap justify-content-center py-3">
         <Link
           to="/"
